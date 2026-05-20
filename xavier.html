@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Xavier Tech Campus 🚀</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* RESET */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+background:#050816;
+color:white;
+overflow-x:hidden;
+transition:0.4s;
+}
+
+/* LIGHT MODE */
+
+body.light{
+background:#f5f5f5;
+color:#111;
+}
+
+/* PARTICLES */
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+}
+
+/* NAVBAR */
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 8%;
+position:sticky;
+top:0;
+z-index:1000;
+backdrop-filter:blur(12px);
+background:rgba(255,255,255,0.05);
+border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.logo{
+font-size:28px;
+font-weight:bold;
+color:#00f7ff;
+text-shadow:0 0 20px #00f7ff;
+}
+
+nav ul{
+display:flex;
+list-style:none;
+gap:20px;
+}
+
+nav a{
+text-decoration:none;
+color:white;
+transition:0.3s;
+font-weight:600;
+}
+
+nav a:hover{
+color:#00f7ff;
+}
+
+.toggle-btn{
+padding:10px 20px;
+border:none;
+border-radius:30px;
+background:linear-gradient(90deg,#00f7ff,#8b5cf6);
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+padding:40px;
+}
+
+.hero h1{
+font-size:70px;
+background:linear-gradient(to right,#00f7ff,#8b5cf6,#ff00ff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+text-shadow:0 0 20px rgba(0,247,255,0.5);
+}
+
+.hero p{
+margin-top:20px;
+max-width:700px;
+color:#d1d5db;
+font-size:18px;
+}
+
+.btn{
+margin-top:30px;
+padding:15px 30px;
+border:none;
+border-radius:40px;
+background:linear-gradient(90deg,#00f7ff,#8b5cf6);
+color:white;
+font-weight:bold;
+cursor:pointer;
+transition:0.4s;
+box-shadow:0 0 20px rgba(0,247,255,0.5);
+}
+
+.btn:hover{
+transform:scale(1.08);
+}
+
+/* SECTION */
+
+section{
+padding:100px 8%;
+}
+
+.title{
+text-align:center;
+font-size:45px;
+margin-bottom:50px;
+color:#00f7ff;
+text-shadow:0 0 15px #00f7ff;
+}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+}
+
+/* CARD */
+
+.card{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+border-radius:25px;
+padding:25px;
+backdrop-filter:blur(12px);
+transition:0.4s;
+transform-style:preserve-3d;
+animation:fadeUp 1s ease;
+}
+
+.card:hover{
+transform:rotateY(10deg) scale(1.04);
+box-shadow:0 0 30px rgba(0,247,255,0.5);
+}
+
+.card img{
+width:100%;
+height:220px;
+object-fit:cover;
+border-radius:20px;
+margin-bottom:15px;
+}
+
+.card h3{
+color:#00f7ff;
+margin-bottom:10px;
+}
+
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(40px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* PRINCIPAL */
+
+.principal{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:40px;
+align-items:center;
+}
+
+.principal img{
+width:100%;
+border-radius:25px;
+height:450px;
+object-fit:cover;
+}
+
+/* PROGRESS */
+
+.progress{
+background:#222;
+border-radius:20px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.progress div{
+height:15px;
+background:linear-gradient(90deg,#00f7ff,#8b5cf6);
+}
+
+/* TERMINAL */
+
+.terminal{
+background:black;
+color:#00ff88;
+padding:20px;
+border-radius:20px;
+font-family:monospace;
+height:250px;
+overflow:auto;
+box-shadow:0 0 30px rgba(0,255,136,0.3);
+}
+
+/* CHATBOT */
+
+.chatbot{
+display:none;
+position:fixed;
+right:20px;
+bottom:120px;
+width:320px;
+background:#111827;
+border-radius:25px;
+padding:20px;
+box-shadow:0 0 30px rgba(0,247,255,0.5);
+z-index:3000;
+}
+
+.chatbox{
+height:200px;
+overflow:auto;
+margin-bottom:10px;
+font-size:14px;
+}
+
+input{
+width:100%;
+padding:12px;
+border:none;
+border-radius:12px;
+margin-top:10px;
+background:#1e293b;
+color:white;
+}
+
+/* AI CHARACTER */
+
+#aiCharacter{
+
+position:fixed;
+bottom:25px;
+right:25px;
+
+width:85px;
+height:85px;
+
+border-radius:50%;
+
+background:linear-gradient(45deg,#00f7ff,#8b5cf6);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:45px;
+
+cursor:pointer;
+
+z-index:5000;
+
+animation:float 3s ease-in-out infinite;
+
+box-shadow:0 0 30px #00f7ff;
+
+transition:0.4s;
+
+}
+
+#aiCharacter:hover{
+transform:scale(1.1);
+}
+
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-15px);}
+100%{transform:translateY(0px);}
+}
+
+/* FOOTER */
+
+footer{
+text-align:center;
+padding:30px;
+background:rgba(255,255,255,0.05);
+margin-top:50px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.hero h1{
+font-size:42px;
+}
+
+.principal{
+grid-template-columns:1fr;
+}
+
+nav{
+flex-direction:column;
+gap:20px;
+}
+
+nav ul{
+flex-wrap:wrap;
+justify-content:center;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">⚡ XAVIER TECH CAMPUS</div>
+
+<ul>
+<li><a href="#about">About</a></li>
+<li><a href="#courses">Courses</a></li>
+<li><a href="#gallery">Gallery</a></li>
+<li><a href="#admission">Admission</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+
+<button class="toggle-btn" onclick="toggleTheme()">🌙 Mode</button>
+
+</nav>
+
+<!-- HERO -->
+
+<div class="hero">
+
+<h1>🏫 St. Xavier's College Ranchi</h1>
+
+<p>
+Founded in 1944 ✨ <br>
+Autonomous Institution under Ranchi University 🎓 <br>
+NAAC Accredited | Lucens et Ardens 🔥
+</p>
+
+<button class="btn">🚀 Explore Campus</button>
+
+</div>
+
+<!-- ABOUT -->
+
+<section id="about">
+
+<h2 class="title">🕊️ About College</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>🎓 Academic Excellence</h3>
+<p>One of the top colleges in Jharkhand with strong academic reputation.</p>
+</div>
+
+<div class="card">
+<h3>🌟 Autonomous Institution</h3>
+<p>Focused on innovation, discipline and holistic development.</p>
+</div>
+
+<div class="card">
+<h3>🏆 NAAC Accreditation</h3>
+<p>Providing value-based education with modern learning systems.</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- PRINCIPAL -->
+
+<section>
+
+<h2 class="title">👨‍🏫 Principal's Message</h2>
+
+<div class="principal">
+
+<img src="https://sxcran.ac.in/images/ManagementProfile/Principal01.jpg">
+
+<div class="card">
+
+<h3>Rev. Fr. Dr. Robert Pradeep Kujur, S.J.</h3>
+
+<p>
+Welcome to St. Xavier’s College Ranchi 🚀  
+Our mission is to create future leaders with excellence, innovation and ethics.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- COURSES -->
+
+<section id="courses">
+
+<h2 class="title">📚 Courses</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>💻 BCA</h3>
+<p>Computer Applications & Programming</p>
+</div>
+
+<div class="card">
+<h3>📊 BBA</h3>
+<p>Business Administration & Management</p>
+</div>
+
+<div class="card">
+<h3>🔬 B.Sc</h3>
+<p>Science & Research Programs</p>
+</div>
+
+<div class="card">
+<h3>📖 BA</h3>
+<p>Arts & Humanities Courses</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- SKILLS -->
+
+<section>
+
+<h2 class="title">📊 Campus Excellence</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>🎓 Education</h3>
+<div class="progress"><div style="width:95%"></div></div>
+</div>
+
+<div class="card">
+<h3>🏆 Placement</h3>
+<div class="progress"><div style="width:85%"></div></div>
+</div>
+
+<div class="card">
+<h3>⚽ Sports</h3>
+<div class="progress"><div style="width:90%"></div></div>
+</div>
+
+</div>
+
+</section>
+
+<!-- GALLERY -->
+
+<section id="gallery">
+
+<h2 class="title">🏫 Campus Gallery</h2>
+
+<div class="grid">
+
+<div class="card">
+<img src="https://sxcran.ac.in/images/main/SXCBuilding1.jpg">
+<h3>🏫 Main Campus</h3>
+</div>
+
+<div class="card">
+<img src="https://sxcran.ac.in/images/main/SXCBuilding2.jpg">
+<h3>🎓 Academic Block</h3>
+</div>
+
+<div class="card">
+<img src="data:image/jpeg;base64,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">
+<h3>🌿 Green Campus</h3>
+</div>
+
+</div>
+
+</section>
+
+<!-- ADMISSION -->
+
+<section id="admission">
+
+<h2 class="title">🎓 Admission Portal</h2>
+
+<div class="card">
+
+<p>
+Apply now for Undergraduate and Postgraduate Programs 🚀
+</p>
+
+<button class="btn">✅ Apply Now</button>
+
+</div>
+
+</section>
+
+<!-- NOTICE -->
+
+<section>
+
+<h2 class="title">📰 Notice Board</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>📢 Semester Examination</h3>
+<p>Exam schedule released for upcoming semester.</p>
+</div>
+
+<div class="card">
+<h3>🎉 Cultural Fest</h3>
+<p>Annual cultural fest registrations are now open.</p>
+</div>
+
+<div class="card">
+<h3>🏆 Placement Drive</h3>
+<p>Top companies visiting campus this month.</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- TERMINAL -->
+
+<section>
+
+<h2 class="title">💻 Cyber Terminal</h2>
+
+<div class="terminal" id="terminal">
+
+> Xavier Cyber System Initialized...<br>
+> Welcome Student 👋<br>
+
+</div>
+
+<br>
+
+<button class="btn" onclick="terminalEffect()">⚡ Run System</button>
+
+</section>
+
+<!-- MINI GAME -->
+
+<section>
+
+<h2 class="title">🎮 Mini Game</h2>
+
+<div class="card" style="text-align:center;">
+
+<h1 id="score">0</h1>
+
+<p>🔥 Click button to increase score</p>
+
+<button class="btn" onclick="game()">Click Me</button>
+
+</div>
+
+</section>
+
+<!-- MUSIC -->
+
+<section>
+
+<h2 class="title">🎵 Music Player</h2>
+
+<div class="card">
+
+<audio controls style="width:100%">
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
+
+</div>
+
+</section>
+
+<!-- CHATBOT -->
+
+<div class="chatbot">
+
+<h3>🤖 Xavier AI Bot</h3>
+
+<div class="chatbox" id="chatbox">
+<p>Bot: Welcome to Xavier Cyber Campus 👋</p>
+</div>
+
+<input type="text" id="chatInput" placeholder="Ask something...">
+
+<button class="btn" onclick="chat()">Send</button>
+
+</div>
+
+<!-- AI CHARACTER -->
+
+<div id="aiCharacter" onclick="toggleBot()">
+🤖
+</div>
+
+<!-- CONTACT -->
+
+<section id="contact">
+
+<h2 class="title">📞 Contact</h2>
+
+<div class="card">
+
+<p>📍 Ranchi, Jharkhand</p>
+<p>🌐 www.sxcran.ac.in</p>
+<p>📧 info@sxcran.ac.in</p>
+
+</div>
+
+</section>
+
+<footer>
+
+✨ Futuristic Xavier Cyber Campus Website 🚀
+
+</footer>
+
+<script>
+
+/* DARK MODE */
+
+function toggleTheme(){
+document.body.classList.toggle('light');
+}
+
+/* TERMINAL */
+
+function terminalEffect(){
+
+const terminal = document.getElementById('terminal');
+
+terminal.innerHTML += '> Connecting to Xavier Database...<br>';
+
+setTimeout(()=>{
+
+terminal.innerHTML += '> Access Granted ✅<br>';
+terminal.innerHTML += '> Student Portal Online 🚀<br><br>';
+
+},1000);
+
+}
+
+/* GAME */
+
+let score = 0;
+
+function game(){
+
+score++;
+
+document.getElementById('score').innerText = score;
+
+}
+
+/* CHATBOT */
+
+function chat(){
+
+const input = document.getElementById('chatInput').value;
+
+const box = document.getElementById('chatbox');
+
+box.innerHTML += `<p>You: ${input}</p>`;
+
+let reply = '🤖 Welcome to Xavier College';
+
+if(input.includes('admission')){
+reply = '🎓 Admissions are open now!';
+}
+
+if(input.includes('courses')){
+reply = '📚 Courses available: BCA, BBA, BA, B.Sc.';
+}
+
+if(input.includes('hello')){
+reply = '👋 Hello Student!';
+}
+
+box.innerHTML += `<p>Bot: ${reply}</p>`;
+
+}
+
+/* TOGGLE BOT */
+
+function toggleBot(){
+
+const bot = document.querySelector('.chatbot');
+
+if(bot.style.display === 'block'){
+
+bot.style.display = 'none';
+
+}else{
+
+bot.style.display = 'block';
+
+}
+
+}
+
+/* PARTICLES */
+
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for(let i=0;i<120;i++){
+
+particles.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*3,
+dx:(Math.random()-0.5),
+dy:(Math.random()-0.5)
+
+});
+
+}
+
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle='#00f7ff';
+
+particles.forEach(p=>{
+
+ctx.beginPath();
+
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+
+ctx.fill();
+
+p.x += p.dx;
+p.y += p.dy;
+
+if(p.x<0 || p.x>canvas.width) p.dx *= -1;
+if(p.y<0 || p.y>canvas.height) p.dy *= -1;
+
+});
+
+requestAnimationFrame(animate);
+
+}
+
+animate();
+
+/* GLOW CURSOR */
+
+document.addEventListener('mousemove',(e)=>{
+
+const glow = document.createElement('div');
+
+glow.style.position='fixed';
+glow.style.left=e.clientX+'px';
+glow.style.top=e.clientY+'px';
+
+glow.style.width='10px';
+glow.style.height='10px';
+
+glow.style.background='#00f7ff';
+
+glow.style.borderRadius='50%';
+
+glow.style.pointerEvents='none';
+
+glow.style.boxShadow='0 0 20px #00f7ff';
+
+document.body.appendChild(glow);
+
+setTimeout(()=>{
+glow.remove();
+},300);
+
+});
+
+</script>
+
+</body>
+</html>
